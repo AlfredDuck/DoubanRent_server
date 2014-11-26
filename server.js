@@ -9,8 +9,8 @@ var routes = require('./routes/index.js');
 var _search = require('./routes/search_2.js');
 var check_data = require('./routes/check_data.js');
 var controller = require('./routes/controller.js');
-var weixin = require('./routes/weixin.js');
-var subscribe = require('./routes/subscribe.js');
+
+
 
 /*其他核心模块*/
 var http = require('http');
@@ -18,6 +18,7 @@ var path = require('path');
 var ejs = require('ejs');
 
 /*-------------提供会话支持（1）---------------*/
+/*
 var SessionStore = require("session-mongoose")(express);
 var store = new SessionStore({
   url:"mongodb://<user>:<password>@emma.mongohq.com:10051/alfredmongodb/session",
@@ -25,7 +26,7 @@ var store = new SessionStore({
   //url: "mongodb://localhost/session",
   interval: 120000
 });
-
+*/
 var app = express();
 
 
@@ -40,6 +41,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser({uploadDir:'./temporary_store'}));
 app.use(express.methodOverride());
 /*------------用于提供会话支持（2）----------------*/
+/*
 app.use(express.cookieParser());
 app.use(express.cookieSession({secret : 'fens.me'}));
 app.use(express.session({
@@ -47,7 +49,7 @@ app.use(express.session({
   store: store,
   cookie: { maxAge: 900000 }
 }));
-
+*/
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -69,11 +71,6 @@ app.get('/alfredduck_controller',                   controller.keywords);
 app.post('/controller/del_keyword',                 controller.del_keyword);
 
 
-//订阅
-app.get('/subscribe', subscribe.subscribe);
-app.post('/do_subscribe', subscribe.do_subscribe);
-app.get('/un_subscribe', subscribe.un_subscribe);
-app.post('/undo_subscribe', subscribe.undo_subscribe);
 
 
 //端口监听
