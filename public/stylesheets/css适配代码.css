@@ -1,0 +1,62 @@
+/*适配手机屏幕用代码*/
+@media only screen and (max-width: 300px) {
+body{font-size:8.33333px!important}
+.viewport{max-width:300px}
+}
+@media only screen and (max-width: 310px) and (min-width: 300px) {
+body{font-size:8.33333px!important}
+.viewport{max-width:300px}
+}
+@media only screen and (max-width: 320px) and (min-width: 310px) {
+body,table{font-size:8.88889px!important}
+.viewport{max-width:320px}
+}
+@media only screen and (max-width: 360px) and (min-width: 320px) {
+body,table{font-size:8.88889px!important}
+.viewport{max-width:360px}
+}
+@media only screen and (max-width: 360px) and (min-width: 350px) {
+body{font-size:10px!important}
+.viewport{max-width:360px}
+}
+@media only screen and (max-width: 480px) and (min-width: 360px) {
+body{font-size:10px!important}
+.viewport{max-width:480px}
+}
+@media only screen and (max-width: 480px) and (min-width: 470px) {
+body{font-size:13.3333px!important}
+.viewport{max-width:480px}
+}
+@media only screen and (max-width: 560px) and (min-width: 480px) {
+body{font-size:13.3333px!important}
+.viewport{max-width:560px}
+}
+@media only screen and (max-width: 570px) and (min-width: 560px) {
+body{font-size:15px!important}
+.viewport{max-width:570px}
+}
+@media only screen and (max-width: 640px) and (min-width: 570px) {
+body{font-size:15px}
+table{font-size:15px!important}
+.viewport{max-width:640px}
+}
+@media only screen and (max-width: 640px) and (min-width: 630px) {
+.viewport{max-width:640px}
+body,table{font-size:15px!important}
+}
+@media only screen and (max-width: 684px) and (min-width: 640px) {
+.viewport{max-width:684px}
+body,table{font-size:15px!important}
+}
+@media only screen and (max-width: 710px) and (min-width: 684px) {
+.viewport{max-width:710px}
+body,table{font-size:15px!important}
+}
+@media only screen and (max-width: 1024px) and (min-width: 710px) {
+.viewport{max-width:1024px}
+body,table{font-size:15px!important}
+}
+@media (min-width: 1025px) {
+	.viewport{max-width:1024px}
+    body,table{font-size:15px!important}
+}

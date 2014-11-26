@@ -1,0 +1,36 @@
+$(document).ready(function(){
+/*
+控制首页index.html的不同UI样式
+*/
+function indexUI(){
+  var $container = $("#container");
+  var $header = $("#header");
+  var $introduce = $("#sofamap_introduce");
+  var $logo = $("#logo");
+  var $account = $("#account");
+  
+  //获取window宽度
+  var winWidth = $(window).width();
+  //设置向左位移
+  var moveLeft = (960 - winWidth)/2;
+  var winHeight =  $(window).height();
+  alert(winHeight);
+  var toCut = parseInt($header.css("height")) + parseInt($introduce.css("height"));
+  alert(toCut);
+  var usedHeight = winHeight - toCut;
+  
+  $container.css("left", moveLeft);
+  $container.css("width", winWidth);
+  $container.css("height", usedHeight);
+  $("#contain").css("marginTop", 0);
+  
+  //设置head部分的左右偏移
+  
+  $logo.css("marginLeft", 10);
+  $account.css("right", 10);
+  $("#header_inner").css("width", winWidth);
+}
+
+indexUI();
+
+});

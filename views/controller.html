@@ -1,0 +1,25 @@
+<% include header.html %>
+<div>
+<p><%- show_keywords %> </p>
+</div>
+<script>
+(function(){
+$(document).ready(function(){
+   $('.del_keyword').bind('click', function(){
+      var keyword = $(this).attr('title');
+      alert(keyword);  
+      $.post(
+         "/controller/del_keyword", 
+         {keyword: keyword}, 
+         function(data){
+            alert("删除： " + data);
+         }
+      );
+   });
+
+});
+}());
+
+
+</script>
+<% include footer.html %>

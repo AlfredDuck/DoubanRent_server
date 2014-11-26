@@ -1,0 +1,232 @@
+/*
+*通用前端js部分
+*form表单前端验证
+*/
+
+$(document).ready(function(){
+
+/*----------------注册判断----------------------*/
+//点击昵称输入框时
+$("#signup #username").focus(function(){
+   isMail();
+});
+//点击密码输入框时
+$("#signup #password").focus(function(){
+   isUsername();
+});
+//点击提交按钮时
+$("#signup").submit(function(){
+   if(!isMail()){
+      return false;
+   }
+   if(!isUsername()){
+      return false;
+   }
+   if(!isPassword()){
+      return false;
+   }
+})
+
+//判断邮箱格式
+function isMail(){
+   var mailtext = $("#mail").val();
+   if(mailtext === ""){
+      $("#mail_err").text("邮箱不能为空");
+      $("#mail_err").css("color", "red");
+      return false;
+   }else{
+      var mailreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      //返回true或false
+      var mailRight = mailreg.test(mailtext);
+      if(!mailRight){
+         //alert("邮箱格式错误");
+         $("#mail_err").text("邮箱格式错误");
+         $("#mail_err").css("color", "red");
+         return false;
+      }else return true;
+   }
+}
+//判断昵称格式
+function isUsername(){
+   var usernameText = $("#signup #username").val();
+   if(usernameText === ""){
+      $("#signup #username_err").text("昵称不能为空");
+      $("#signup #username_err").css("color", "red");
+      return false;
+   }else{
+      var match1 = usernameText.match(/^[0-9A-Za-z-\u4e00-\u9fa5]{1,30}$/);
+      //匹配只能是数字字母或汉字，数目不限
+      //匹配成功则返回匹配的字符，否则返回null
+      //alert(match1);
+      if(match1 === null){
+         $("#signup #username_err").text("昵称只能使用数字，字母或汉字");
+         $("#signup #username_err").css("color", "red");
+         return false;
+      }else return true;
+   }
+}
+//判断密码格式
+function isPassword(){
+  var passwordText = $("#password").val();
+  if(passwordText === ""){
+      $("#password_err").text("密码不能为空");
+      $("#password_err").css("color", "red");
+      return false;
+  }else{
+     var match1 = passwordText.match(/^[0-9A-Za-z]{6,16}$/);//匹配只能是数字或字母，6到16位
+     if(match1 === null){
+        $("#password_err").text("密码必须为6～16位数字或字母");
+        $("#password_err").css("color", "red");
+        return false;
+     }else return true;
+  }
+}
+
+/*------------------------登录流程判断----------------------------*/
+$("#login #submit").click(function(){
+   if(!isMail()){}
+   else if(!isPassword()){}
+   else{
+      var themail = $("#mail").val();
+      var thepassword = $("#password").val();
+      $.post("/login", {mail: themail, password: thepassword}, function(data, status){
+        if(data === "not"){
+           $("#mail_err").text("邮箱或密码错误");
+           $("#mail_err").css("color", "red");
+        }else{
+           alert(data);
+           window.location.href = "/user/" + data;
+        }
+      });
+   }
+});
+
+
+/*-----------------修改密码流程判断------------------*/
+$("#change_password #submit").bind("click", function(){
+   //DOM tree的遍历是昂贵的，所以先存在内存里，随时调用
+   var $action = $("#change_password").attr("action");
+   var $old_password = $("#old_password").val();
+   var $new_password = $("#new_password").val();
+   var $old_password_err = $("#old_password_err");
+   var $new_password_err = $("#new_password_err");
+   //旧密码是否为空，
+   if(!isOldPassword($old_password)){}
+   //新密码格式判断
+   if(!isNewPassword($new_password, $new_password_err)){}
+   else{
+      $.post($action, {old_password: $old_password, new_password: $new_password}, function(data){
+         if(data === "not_1"){
+            $old_password_err.text("原密码错误").css("color", "red"); 
+         }else{ 
+            alert("密码修改成功");
+            window.location.href = "/user/" + data + "/setting";
+         }
+      });
+   } 
+});
+//旧密码是否为空
+function isOldPassword($old_password){
+  if($old_password === ""){
+      //$("#old_password_err").text("原密码不能为空").css("color", "red");
+      return false;
+  }
+}
+//新密码格式是否正确
+function isNewPassword($new_password, $new_password_err){
+  var match1 = $new_password.match(/^[0-9A-Za-z]{6,16}$/);//匹配只能是数字或字母，6到16位
+  if($new_password === ""){
+      //$("#new_password_err").text("新密码不能为空").css("color", "red");
+      return false;
+  }else
+  if(match1 === null){
+     $new_password_err.text("密码必须为6～16位数字或字母").css("color", "red");
+     return false;
+  }else return true;
+}
+
+/*留言页，回复一个人*/
+$(".show_message .repy").click(function(){
+   alert("repy?");
+   var toWhom = $(this).siblings(".username").text();
+   alert(toWhom);
+   $("#leave_message textarea").text("@" + toWhom + ":  ");
+   $("#leave_message textarea").focus();
+});
+
+/*---------留言前端逻辑----------*/
+//留言输入框里的提示文字点击消失
+/*
+var $message_textarea = $("#write_message textarea");
+$message_textarea.bind("focus", function(){
+   $message_textarea.text("");
+});
+*/
+//留言为空不能提交
+$("#leave_message").submit(function(){
+   return stopSubmit();
+});
+function stopSubmit(){
+   var text = $("#write_message #leave_message textarea").val();
+   alert(text);
+   if(text === ""){
+      alert("写点什么再提交吧");
+      return false;
+   }
+   else return true;
+}
+
+/*---------上传图片，头像不能为空---------*/
+function stopUpload($input, $form){
+   $form.bind("submit", function(){
+      return isInputEmpty($input);
+   });
+}
+function isInputEmpty($input){
+   if($input.val() === ""){
+      alert("不能为空哦");
+      return false;
+   }
+}
+//上传图片判断
+stopUpload($("#choose_image input"), $("#choose_image form"));
+//上传头像判断
+stopUpload($("#upload_head_pic input"), $("#upload_head_pic form"));
+
+//头像预览页面，获取图片尺寸
+$("#preview_headpic button").bind("click", function(){
+
+   var img = new Image();
+   img.src = $("#preview_headpic img").attr("src");
+   img.onload = function(){
+      alert("width: " + img.width + "; height: " + img.height + "; src: " + img.src);
+   
+      $.post(
+         "/user/upload_headpic", 
+         {imgWidth: img.width, imgHeight: img.height, imgSrc: img.src}, 
+         function(data){
+            alert("跳转到： " + data);
+            window.location.href = data;
+         }
+      );
+   };
+});
+
+
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+

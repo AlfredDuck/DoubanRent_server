@@ -1,0 +1,78 @@
+/*
+*地图相关服务
+*/
+$(document).ready(function(){
+
+
+/*创建地图*/
+var map = new BMap.Map("container");          // 创建地图实例
+var point = new BMap.Point(115.404, 39.915);  // 创建点坐标
+//map.centerAndZoom(point, 15);                 // 初始化地图，设置中心点坐标和地图级别
+/*地图控件*/
+map.addControl(new BMap.MapTypeControl());   //切换普通&卫星
+map.addControl(new BMap.NavigationControl());   //平移缩放控件
+/*地图标注*/
+var marker = new BMap.Marker(point);        // 创建标注
+map.addOverlay(marker);                      //标注添加到地图上，可以用来表示地图上有的沙发
+map.addOverlay(new BMap.Marker(new BMap.Point(116.402, 39.911)));
+/*地图信息窗口*/
+var opts = {
+     width : 250,     // 信息窗口宽度    
+     height: 100,     // 信息窗口高度    
+     title : "Hello"  // 信息窗口标题   
+}
+var infoWindow = new BMap.InfoWindow("World", opts);  // 创建信息窗口对象
+map.openInfoWindow(infoWindow, map.getCenter());      // 打开信息窗口
+
+/*获取当前用户城市*/
+var myCity = new BMap.LocalCity();
+myCity.get(function(result){
+  alert(result.name);
+  map.centerAndZoom(result.center, result.level);     //设置当前城市中心坐标和地图级别
+});
+
+/*将输入地址转化为坐标并显示在地图上*/
+// 创建地址解析器实例   
+var myGeo = new BMap.Geocoder();    
+// 将地址解析结果显示在地图上，并调整地图视野  
+myGeo.getPoint("北京市海淀区上地10街10号", function(point){    
+ if (point) {    
+   map.centerAndZoom(point, 16);    
+   map.addOverlay(new BMap.Marker(point));    
+ }    
+}, "北京市");    
+
+/**/
+// 创建CityList对象，并放在citylist_container节点内
+var myCl = new BMapLib.CityList({container : "citylist_container", map : map});
+
+// 给城市点击时，添加相关操作
+myCl.addEventListener("cityclick", function(e) {
+	// 修改当前城市显示
+	document.getElementById("curCity").innerHTML = e.name;
+
+	// 点击后隐藏城市列表
+	document.getElementById("cityList").style.display = "none";
+});
+
+// 给“更换城市”链接添加点击操作
+$("#curCityText").click(function(){
+        alert('get it');
+});
+
+// 给城市列表上的关闭按钮添加点击操作
+document.getElementById("popup_close").onclick = function() {
+	var cl = document.getElementById("cityList");
+	if (cl.style.display == "none") {
+		cl.style.display = "";
+	} else {
+		cl.style.display = "none";
+	}	
+};
+
+
+
+
+
+
+});

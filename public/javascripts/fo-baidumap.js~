@@ -1,0 +1,144 @@
+/*
+*首页地图相关服务
+*/
+$(document).ready(function(){
+//创建地图实例
+var map = new BMap.Map("container");
+//获得用户当前位置，并初始化地图
+startMap(map);
+//用户主动选择城市
+selectCity(map);
+
+});
+
+/*------------获得用户当前位置，并初始化地图----------------*/
+function startMap(map){
+//获取用户所在城市
+var myCity = new BMap.LocalCity();
+//获取城市名称，并在地图上定位
+myCity.get(function(result){
+  //alert(result.name);
+  //修改当前城市的显示
+  $("#current_city p").text(result.name);
+  //设置当前地图中心坐标和地图级别
+  map.centerAndZoom(result.center, result.level);
+  //在地图上显示沙发的位置
+  showSofas(result.name, map);
+});
+  /*地图控件*/
+  map.addControl(new BMap.NavigationControl({type: BMAP_NAVIGATION_CONTROL_ZOOM}));   //平移缩放控件
+}
+
+/*------------------用户主动选择城市----------------*/
+function selectCity(map){
+var area = new Array();
+var $citylist = $(".citylist");
+$("#s_button").bind("click", function(){
+  //因为select控件里的值是动态写入的，所以需要重新获取一次dom tree
+  $(document).ready(function(){
+     var province = $("#s_province").val();
+     var city = $("#s_city").val();
+     var country = $("#s_county").val();
+     //alert(province + city + country);
+     //检查是否完整输入了省市区
+     if(province == "省份"){
+     }
+     else if(city == "地级市"){
+        area.push(province);
+     }
+     else if(country == "市、县级市"){
+        area.push(province);
+        area.push(city);
+     }
+     else{
+        area.push(province);
+        area.push(city);
+        area.push(country);
+     }
+     //alert(area);
+  });
+  //修改当前城市的显示
+  if(area.length === 2){
+     $("#current_city p").text(area[1]);
+     $citylist.hide();
+     //修改地图的显示
+     //在城市的级别
+     var myGeo = new BMap.Geocoder();
+     // 将地址解析结果显示在地图上，并调整地图视野  
+     myGeo.getPoint(area[1], function(point){   
+        if (point) {    
+           map.centerAndZoom(point, 12);    
+           //map.addOverlay(new BMap.Marker(point));    
+        }
+     }, area[1]);
+     //在地图上显示沙发的位置
+     showSofas(area[1], map);
+  }
+  else if(area.length === 3){
+     $("#current_city p").text(area[1]+area[2]);
+     $citylist.hide();
+     //修改地图的显示
+     //在区县的级别
+     var myGeo = new BMap.Geocoder();
+     // 将地址解析结果显示在地图上，并调整地图视野  
+     myGeo.getPoint(area[1]+area[2], function(point){    
+        if (point) {
+           map.centerAndZoom(point, 14);    
+           //map.addOverlay(new BMap.Marker(point));    
+        }    
+     }, area[1]);
+     //在地图上显示沙发的位置
+     showSofas(area[1], map);
+  }
+
+  //将数组清空，防止多次area.push
+  area = [];
+});
+
+}
+//---------------------------------------------------------------------------
+
+/*---------------------将沙发显示在地图上--------------------------*/
+/*
+1.以当前城市查找数据库中的沙发
+2.将当前城市的沙发显示在地图上
+*/
+function showSofas(city, map){
+   $.post("/showsofas", {city: city}, function(data){
+      //data是一个数组，数组元素是一个个JSON文件，储存着每个沙发的信息
+      for(var i=0; i<=data.length-1; i++){
+         //批量创建坐标点
+         createPoint(map, data[i]);
+      }
+   });
+}
+/*批量创建坐标点*/
+function createPoint(map, sofa){
+   //创建坐标点
+   var pt = new BMap.Point(sofa.infor.point[0], sofa.infor.point[1]);
+   var myIcon = new BMap.Icon("/images/point.png", new BMap.Size(24, 32));
+   var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+   map.addOverlay(marker2);              // 将标注添加到地图中
+   //给坐标点添加点击行为
+   var content = '<p>' + sofa.username +
+                 '的沙发</p><p>' + 
+                 sofa.infor.location[1]+ sofa.infor.location[2]+ sofa.infor.location[3]+ 
+                 '</p><a href="/user/' + sofa.username + '" target="_blank">【详情】</a>';
+   var infoWindow2 = new BMap.InfoWindow(content);
+   marker2.addEventListener("click", function(){
+      this.openInfoWindow(infoWindow2);
+   });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,300 @@
+*{
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+body {
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  color: rgb(85, 85, 85);
+  background-color: white;
+}
+
+a {
+  color: #4fabd6;
+  text-decoration:none;
+  cursor:pointer;
+}
+#contain{
+  width: 600px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+button {
+  cursor:pointer;
+  background-color: rgb(51, 119, 170);
+   color: white;
+   height: 30px;
+   border: solid 1px rgb(51, 119, 170);
+   border-radius: 4px;
+   padding-left: 12px;
+   padding-right: 12px;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+h1 a{
+  color: rgb(51, 119, 170);
+}
+li {
+    list-style-type:none;
+}
+input {
+   background-color: white;
+   color: rgb(85, 85, 85);
+   width: 300px;
+   height: 30px;
+   border: solid 1px rgb(51, 119, 170);
+   border-radius: 4px;
+   margin-left: 115px;
+   padding-left:5px;
+   margin-bottom: 5px;
+}
+textarea {
+  background-color: white;
+}
+
+#links {
+  margin-top: 13px;
+  margin-left:115px;
+  color: white;
+}
+#links a{
+  color: white;
+}
+
+#declare {
+  margin-top: 80px;
+  text-align: center;
+}
+
+#getnothing {
+  text-align: center;
+  margin-top: 40px;
+}
+
+#price {
+  color: red;
+  font-weight: bold;
+}
+
+#little_mind {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.del_keyword {
+  background-color: rgb(241, 241, 241);
+  color: green;
+}
+
+.room_conditions {
+  margin-left: 115px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.room_conditions p {
+  margin-bottom: 5px;
+}
+.room_num, .room_size, .room_rent_way {
+  margin-bottom: 5px;
+}
+
+.room_conditions li {
+  display: inline;
+  cursor:pointer;
+  margin-right: 10px;
+  color: #4fabd6;
+}
+
+.room_conditions .in {
+  background-color: #4fabd6;
+  color: white;
+}
+
+#page p {
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+
+#result p {
+  line-height: 1.6em;;
+}
+#result .tiezi {
+  margin-bottom: 30px;
+  color: rgb(85, 85, 85);
+}
+#result .tiezi_title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: rgb(51, 119, 170);
+} 
+#share {
+  text-align: center;
+  margin-top: 100px;
+}
+.share {
+  color: rgb(153,153,153);
+  margin-bottom: 5px;
+}
+.bshare-custom {
+  margin-bottom: 20px;
+}
+
+#city {
+  margin-left: 125px;
+  margin-bottom: 3px;
+}
+#city p {
+  font-size: 14px;
+}
+#city .in {
+  color: rgb(85, 85, 85);
+  font-weight: bold;
+}
+
+/*订阅*/
+.need_to_know{
+  margin-left: 150px;
+  margin-right: 150px;
+}
+.need_to_know p{
+  background-color: yellow;
+}
+.need_mail{
+  margin-top: 20px;
+  margin-left: 150px;
+}
+.need_mail input{
+  margin-left: 0;
+  margin-top:5px;
+}
+.need_local{
+  margin-top: 20px;
+  margin-left: 150px;
+}
+.need_local input{
+  margin-left: 0;
+  margin-top:5px;
+  width: 237px;
+}
+.need_local select{
+   color: rgb(85, 85, 85);
+   padding: 6px 0;
+   width: 60px;
+   border-radius: 4px;
+}
+.room_conditions{
+  margin-left: 150px;;
+}
+.need_button{
+  margin-left: 150px;
+}
+
+/*退订*/
+.unsubscribe_button{
+  margin-left: 150px;
+  margin-top: 10px;
+}
+/*订阅入口*/
+#sub_enter {
+  color: green;
+  margin-left: 115px;
+}
+
+/*适配手机*/
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+body {
+  font-size: 15px;
+}
+a {
+  font-size: 15px;
+}
+h1 a{
+  font-size: 25px;
+}
+input {
+  font-size: 15px;
+}
+button {
+  font-size: 15px;
+}
+#cizi{
+  width:767px;
+  background-color: red;
+}
+#contain{
+  width: 92%;
+  min-width: 92%;
+  margin: 0 4%;
+}
+#city{
+  margin-left: 4%;
+}
+#search {
+  width: 100%;
+  text-align: center;
+}
+#search input{
+  margin-left: 0;
+  width: 75%;
+}
+#search button{
+  width: 20%;
+  padding: 0;
+}
+.room_conditions {
+  width: 95%;
+  margin-left: 2.5%;
+}
+
+/*订阅*/
+.need_to_know{
+  margin-left: 2.5%;
+  width: 95%;
+}
+.need_mail{
+  margin-left: 2.5%;
+  width: 95%;
+}
+.need_mail input{
+  width: 97.5%;
+}
+.need_local{
+  margin-left: 2.5%;
+  width: 95%;
+}
+.need_local select{
+  width: 20%;
+}
+.need_local input{
+  width: 76%;
+}
+.need_button{
+  margin-left: 2.5%;
+  width: 95%;
+}
+.unsubscribe_button{
+  margin-left: 2.5%;
+  width: 95%;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

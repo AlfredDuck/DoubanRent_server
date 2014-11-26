@@ -1,0 +1,44 @@
+<% include header.html %>
+
+<div id="city" title="<%= local_city %>">
+   <p>
+   <a class="off" title="beijing" href="/local/beijing">北京</a> | 
+   <a class="off" title="shanghai" href="/local/shanghai">上海</a> | 
+   <a class="off" title="guangzhou" href="/local/guangzhou">广州</a>
+   </p>
+</div>
+<form method="post" id="search" action="/search/<%= local_city %>">
+      <input type="text" name="keyword" id="keyword" value="输入地区名，如:中关村"/>
+      <button id="submit">搜一下</button>
+</form>
+<a id="sub_enter" href="/subscribe" target="_blank">订阅豆瓣租房汇总>></a>
+
+<div id="links">
+  <p><a href="/today" target="_blank">今日最新</a></p>
+</div>
+
+<!--
+<div id="declare">
+  <p>声明：所有搜索结果均来自豆瓣小组，本着不负责的原则，真伪请自辨，是否中介请自辨</p>
+</div>
+-->
+<div id="share">
+<p class="share">如果你觉得这个网站好用，也许你也想分享给你的朋友们：</p>
+<!--分享代码 from bshare-->
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div><a title="分享到豆瓣" class="bshare-douban" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span style="float: none;" class="BSHARE_COUNT bshare-share-count">28.1K</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+</div>
+
+</div>
+
+<!--引用百度地图api-->
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script src="/javascripts/only.js"></script>
+<script>
+$(document).ready(function(){
+$('input').bind('focus', function(){
+   $(this).val('');
+});
+});
+</script>
+<% include footer.html %>
+

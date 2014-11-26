@@ -1,0 +1,52 @@
+<% include header.html %>
+<div class="need_to_know">
+    <h3>每天发送最新的豆瓣房源到你的邮箱</h3>
+    <p>订阅功能只为那些没时间刷帖的小伙伴，如果你已经找到房子或觉得推送很烦，可以在此退订→<a href="/un_subscribe">【退订】</a></p>
+</div>
+<div class="need_mail">
+   <p>1.填写你的常用邮箱(必填)</p>
+   <input type="text" value=""/>
+</div>
+<div class="need_local">
+      <p>2.填写要订阅的地区，如“中关村+五道口”(必填)</p>
+      <select class="need_city" name="city">
+        <option value="beijing">北京</option>
+        <option value="shanghai">上海</option>
+        <option value="guangzhou">广州</option>
+      </select>
+      <input type="text" name="keyword" id="keyword" value=""/>   
+</div>
+<div class="room_conditions">
+    <p>3.选择附加选项</p>
+    <div class="room_num">
+        <li class="in" id="">全部</li>
+        <li class="out" id="">一室</li>
+        <li class="out" id="">两室</li>
+        <li class="out" id="">三室</li>
+        <li class="out" id="">四室</li>
+        <li class="out" id="">五室</li>
+    </div>
+    <div class="room_size">
+        <li class="in" id="">全部</li>
+        <li class="out" id="">整租</li>
+        <li class="out" id="">主卧</li>
+        <li class="out" id="">次卧</li>
+        <li class="out" id="">单间</li>
+        <li class="out" id="">床位</li>
+    </div>
+    <div class="room_rent_way">
+        <li class="in" id="">全部</li>
+        <li class="out" id="">求租</li>
+        <li class="out" id="">合租</li>
+    </div>
+</div>
+
+<button class="need_button" id="submit">订阅</button>
+
+</div>
+<script src="/javascripts/fo-subscribe.js"></script>
+<script src="/javascripts/only.js"></script>
+<% include footer.html %>
+
+
+

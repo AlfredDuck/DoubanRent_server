@@ -1,0 +1,57 @@
+<% include header.html %>
+<div id="city" title="<%= local_city %>">
+   <p>
+   <a class="off" title="beijing" href="/local/beijing">北京</a> | 
+   <a class="in" title="shanghai" href="/local/shanghai">上海</a> | 
+   <a class="off" title="guangzhou" href="/local/guangzhou">广州</a>
+   </p>
+</div>
+<form method="post" id="search" action="/search/<%= local_city %>">
+      <input type="text" name="keyword" id="keyword" value="<%= search_word %>"/>
+      <button id="submit">搜一下</button>
+</form>
+<a id="sub_enter" href="/subscribe" target="_blank">订阅豆瓣租房汇总>></a>
+<div class="room_conditions" title="<%= search_word %>">
+    <p>在搜索结果中筛选</p>
+    <div class="room_num">
+        <li class="in" id="">全部</li>
+        <li class="out" id="">一室</li>
+        <li class="out" id="">两室</li>
+        <li class="out" id="">三室</li>
+        <li class="out" id="">四室</li>
+        <li class="out" id="">五室</li>
+    </div>
+    <div class="room_size">
+        <li class="in" id="">全部</li>
+        <li class="out" id="">整租</li>
+        <li class="out" id="">主卧</li>
+        <li class="out" id="">次卧</li>
+        <li class="out" id="">单间</li>
+        <li class="out" id="">床位</li>
+    </div>
+    <div class="room_rent_way">
+        <li class="in" id="">全部</li>
+        <li class="out" id="">求租</li>
+        <li class="out" id="">合租</li>
+    </div>
+</div>
+
+<div id="result">
+    <%- result %>
+</div>
+
+<div id="page">
+    <p><a id="up">上一页</a> | <a id="down">下一页</a></p>
+</div>
+
+<p class="share">如果你觉得这个网站好用，也许你也想分享给你的朋友们：</p>
+<!--分享代码 from bshare-->
+<div class="bshare-custom"><div class="bsPromo bsPromo2"></div><a title="分享到豆瓣" class="bshare-douban" href="javascript:void(0);"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到QQ空间" class="bshare-qzone" href="javascript:void(0);"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span style="float: none;" class="BSHARE_COUNT bshare-share-count">28.1K</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+</div>
+<script src="/javascripts/fo-search.js"></script>
+<script src="/javascripts/only.js"></script>
+<% include footer.html %>
+
+
+
