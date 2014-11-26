@@ -58,8 +58,8 @@ if ('development' == app.get('env')) {
 
 //事件处理程序调度(路由器)
 app.get('/',                                        routes.index);
-app.post('/search/keyword',                           _search.searchEngine);
-app.post('/search/condition',                       _search.searchCondition);
+app.post('/search/keyword',                         routes.search_keyword);
+app.post('/search/condition',                       routes.search_condition);
 app.get('/alfredduck_database',                     check_data.database);
 app.get('/alfredduck_ip',                           check_data.IP);
 app.get('/alfredduck_keywords',                     check_data.keywords);
