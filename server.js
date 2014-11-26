@@ -28,36 +28,6 @@ var store = new SessionStore({
 
 var app = express();
 
-/*---用于提供处理微信的xml格式的post--*/
-var utils = require('express/node_modules/connect/lib/utils'), xml2js = require('xml2js');
- 
-function xmlBodyParser(req, res, next) {
-    if (req._body) return next();
-    req.body = req.body || {};
-    // ignore GET
-    if ('GET' == req.method || 'HEAD' == req.method) return next();
-    // check Content-Type
-    if ('text/xml' != utils.mime(req)) return next(); 
-    // flag as parsed
-    req._body = true; 
-    // parse
-    var buf = '';
-    req.setEncoding('utf8');
-    req.on('data', function(chunk){ buf += chunk });
-    req.on('end', function(){  
-      var parseString = xml2js.parseString;
-      parseString(buf, function(err, json) {
-        if (err) {
-            err.status = 400;
-            next(err);
-        } else {
-            req.body = json;
-            next();
-        }
-      });
-    });
-};
-/*-------------*/
 
 // all environments
 app.set('port', process.env.PORT || 18080);
@@ -68,7 +38,6 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 //app.use(express.bodyParser());
 app.use(express.bodyParser({uploadDir:'./temporary_store'}));
-app.use(xmlBodyParser);   //用于处理微信的xml格式的post
 app.use(express.methodOverride());
 /*------------用于提供会话支持（2）----------------*/
 app.use(express.cookieParser());
@@ -89,12 +58,8 @@ if ('development' == app.get('env')) {
 
 //事件处理程序调度(路由器)
 app.get('/',                                        routes.index);
-app.get('/local/:city',                             routes.city);
-app.get('/today',                                   routes.today);
-app.get('/search',                                  _search.toIndex);
-app.get('/search/:city',                            _search.toIndex);
-app.post('/search/:city',                           _search.searchEngine);
-app.post('/search_condition',                       _search.searchCondition);
+app.post('/search/keyword',                           _search.searchEngine);
+app.post('/search/condition',                       _search.searchCondition);
 app.get('/alfredduck_database',                     check_data.database);
 app.get('/alfredduck_ip',                           check_data.IP);
 app.get('/alfredduck_keywords',                     check_data.keywords);
@@ -103,9 +68,6 @@ app.get('/alfredduck_tempkeywords_2',               check_data.tempkeywords_2);
 app.get('/alfredduck_controller',                   controller.keywords);
 app.post('/controller/del_keyword',                 controller.del_keyword);
 
-//weixin API
-app.get('/weixin', weixin.token);
-app.post('/weixin', weixin.get_message);
 
 //订阅
 app.get('/subscribe', subscribe.subscribe);

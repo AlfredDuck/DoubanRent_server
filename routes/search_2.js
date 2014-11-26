@@ -6,9 +6,9 @@ var addTempKeywords     = require('./../models/temp_keywords.js');
 var addKeywords         = require('./../models/keywords.js');
 
 
-exports.toIndex = function(req, res){
-   res.redirect('/');
-};
+
+// 第1步，按照关键词查找（city, keyword)
+// 分两步做的目的是收集keyword
 
 exports.searchEngine = function(req, res){
    var keyword = req.body.keyword;
@@ -111,7 +111,8 @@ exports.searchEngine = function(req, res){
 
 
 
-//按条件查询
+// 第2步，按照condition查找（city, keyword, room_size, room_number, rent_way)
+
 exports.searchCondition = function(req, res){
    console.log(req.body);
    var condition = {};
@@ -191,10 +192,3 @@ function _num(num){
       return arr = ['五居','五室','5居','5室'];
    }
 }
-
-
-
-
-
-
-

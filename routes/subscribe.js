@@ -37,6 +37,7 @@ exports.do_subscribe = function(req, res){
    });
    //res.send('subscribe successfully');
 };
+
 /*--创建新的订阅用户--*/
 function createNewSub(req, res){
    var newSub = new addSubscribe({
@@ -54,6 +55,7 @@ function createNewSub(req, res){
       console.log('add one subscribe');
    });
 }
+
 /*--修改已有用户的订阅信息--*/
 function updateSub(req, res){
    var up_content = {
@@ -72,22 +74,3 @@ function updateSub(req, res){
         console.log('update successfully');
    });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

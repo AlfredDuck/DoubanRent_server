@@ -1,41 +1,35 @@
 <% include header.html %>
+<p><%= content %></p>
 
-<!--引用百度地图api-->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
-<script src="/javascripts/fo-local-city.js"></script>
 
-<div id="city" title="shanghai">
-   <p>
-   <a class="off" title="beijing" href="/local/beijing">北京</a> | 
-   <a class="in" title="shanghai" href="/local/shanghai">上海</a> | 
-   <a class="off" title="guangzhou" href="/local/guangzhou">广州</a>
-   </p>
-</div>
-<form method="post" id="search" action="/search/shanghai">
-      <input type="text" name="keyword" id="keyword" value="输入地区名，如:中关村"/>
-      <button id="submit">搜一下</button>
+<h2>1.按照keyword搜索</h2>
+<form method="post" id="signup" action="/search/keyword">
+   <p>city</p>
+   <input type="text" name="city" id="city" value=""/>
+   <p>keyword</p>
+   <input type="text" name="keyword" id="keyword" value=""/>
+   <button id="submit">send</button>
 </form>
-
-<div id="links">
-  <p><a href="/today" target="_blank">今日最新</a></p>
 </div>
-<!--
-<div id="declare">
-  <p>声明：所有搜索结果均来自豆瓣小组，本着不负责的原则，真伪请自辨，是否中介请自辨</p>
+<hr/>
+
+<h2>2.按照condition搜索</h2>
+<form method="post" id="signup" action="/search/condition">
+   <p>city</p>
+   <input type="text" name="city" id="city" value=""/>
+   <p>keyword</p>
+   <input type="text" name="keyword" id="keyword" value=""/>
+   <p>room_size</p>
+   <input type="text" name="room_size" id="room_size" value=""/>
+   <p>room_number</p>
+   <input type="text" name="room_number" id="room_number" value=""/>
+   <p>rent_way</p>
+   <input type="text" name="rent_way" id="rent_way" value=""/>
+
+   <button id="submit">send</button>
+</form>
 </div>
--->
-
-</div>
+<hr/>
 
 
-<script src="/javascripts/only.js"></script>
-
-<script>
-$(document).ready(function(){
-$('input').bind('focus', function(){
-   $(this).val('');
-});
-});
-</script>
 <% include footer.html %>
-
