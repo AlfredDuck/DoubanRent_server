@@ -23,61 +23,85 @@ exports.search_keyword = function(req, res){
 
 exports.search_condition = function(req, res){
    console.log(req.body);
+   
    var condition = {};
    
-   if (req.body.city == 'beijing'){
-      condition.city = '北京';   
-   }
-   else if (req.body.city == 'shanghai'){
-      condition.city = '上海';   
-   }
-   else if (req.body.city == 'guangzhou'){
-      condition.city = '广州';   
-   }
-   
-   condition.keys = {$all: [req.body.searchWord]};
+   condition.city = req.body.city;
+   condition.keys = {$all: [req.body.keyword]};
 
    if (req.body.room_size != ''){
       condition.room_size = req.body.room_size;
    }
    if (req.body.room_rent_way != ''){
-      condition.rent_way = req.body.room_rent_way;
+      condition.rent_way = req.body.rent_way;
    }
    if (req.body.room_num != ''){
-      condition.room_num = {$in: _num(req.body.room_num)};    //用于数组的or查询
+      condition.room_num = {$in: _num(req.body.room_number)};    //用于数组的or查询
    }
    
    console.log(condition);
    
    var option = {
       sort:[['uptime', -1]],
-      limit: req.body.limit,
-      skip: req.body.skip
+      limit: 5,
+      skip: 0
+   };
+   
+   var result = {
+      err: 'no',
+      content: {},
+      empty: 'no'
    };
    
    addContent.find(condition, null, option, function(err, docs){
-      console.log('查询结果:' + docs.length);
-      var result = '';
+      if (err){
+         console.log('err' + err);
+         result.err = 'yes';
+         res.send(result);
+         return;
+      }
+      
       if (docs.length == 0){
-         result = result + '<h2 id="getnothing">没有您要查询的内容 (〓￣(∵エ∵)￣〓) </h2>';
+         result.empty = 'yes';
       }
       else {
+         var contentArray = [];
          for (var i=0; i<=docs.length-1; i++) {
-            result = result + '<div class="tiezi">';
-            if ( docs[i].price.length != 0 ){
-               result = result + 
-               '<p id="price">★' + docs[i].price + '★</p>'
-            }
-            result = result +
-            '<p class="tiezi_title">' + docs[i].title + '</p>'+
-            '<p>【发帖时间】： ' + docs[i].uptime + '</p>' +
-            '<p>【帖子正文】： ' + docs[i].text + '</p>' +
-            '<p>【帖子链接】： <a href="' + docs[i].url + '" target="_blank">' + docs[i].url + 
-            '</a></p></div>';
+            var tiezi = {
+               _id: docs[i]._id,
+               title: docs[i].title,
+               uptime: docs[i].uptime,
+               text: docs[i].text,
+               url: docs[i].url,
+               price: docs[i].price
+            };
+            contentArray.push(tiezi);
          }
+         result.content = contentArray;
       }
       
       res.send(result);
    });
-
 };
+
+
+//对room_num的简易封装
+function _num(num){
+   var arr = new Array();
+   if (num == '一室'){
+      return arr = ['一居','一室','1居','1室'];
+   }
+   if (num == '两室'){
+      return arr = ['二居','两居','2居','二室','两室','2室'];
+   }
+   if (num == '三室'){
+      return arr = ['三居','三室','3居','3室'];
+   }
+   if (num == '四室'){
+      return arr = ['四居','四室','4居','4室'];
+   }
+   if (num == '五室'){
+      return arr = ['五居','五室','5居','5室'];
+   }
+}
+
