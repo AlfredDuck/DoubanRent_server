@@ -32,10 +32,10 @@ exports.search_condition = function(req, res){
    if (req.body.room_size != ''){
       condition.room_size = req.body.room_size;
    }
-   if (req.body.room_rent_way != ''){
+   if (req.body.rent_way != ''){
       condition.rent_way = req.body.rent_way;
    }
-   if (req.body.room_num != ''){
+   if (req.body.room_number != ''){
       condition.room_num = {$in: _num(req.body.room_number)};    //用于数组的or查询
    }
    
@@ -43,8 +43,8 @@ exports.search_condition = function(req, res){
    
    var option = {
       sort:[['uptime', -1]],
-      limit: 5,
-      skip: 0
+      limit: 10,
+      skip: (req.body.page - 1)*10
    };
    
    var result = {
